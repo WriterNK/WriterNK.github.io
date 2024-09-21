@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script>
+        bigBang = new Date();
+    </script>
+    <meta charset="utf-8" />
+    <title>cet6</title>
+    <style type="text/css">
+        * {
+            text-align: center;
+            text-shadow: 2px 2px 2px grey;
+            border: 1px solid white;
+        }
+
+        header {
+            font-size: 35px;
+            height: 25%;
+            background-color: antiquewhite;
+        }
+
+        main {
+            height: 65%;
+            background-color: aquamarine;
+        }
+
+        footer {
+            font-size: 20px;
+            height: 9%;
+            color: white;
+            background-color: grey;
+        }
+        p {
+            border: 1px solid white;
+        }
+        a {
+            font-size: 20px;
+            color: white;
+            border: none;
+        }
+    </style>
+    <script>
+
+    </script>
+    <script>
+        console.log("加载CSS代码:"+(new Date() - bigBang) + 'ms')
+    </script>
+</head>
+<body>
+    <header>
+        9.21cet6项目
+    </header>
+    <main>
+        <table style="width:100% ;height:100%">
+            <tr><td>&nbsp;</td><td id="word"></td><td>&nbsp;</td></tr>
+            <tr><td>&nbsp;</td><td id="pron"></td><td>&nbsp;</td></tr>
+            <tr><td>&nbsp;</td><td id="chin"></td><td>&nbsp;</td></tr>
+        </table>
+    </main>
+    <footer>
+        <a href="https://www.jxstnu.edu.cn/">江西科技师范大学元宇宙产业学院</a> 计算机科学与技术二班<br>
+        黄可濠的cet6作业 修改日期：2024.9.21
+    </footer>
+    <script>
+        document.body.style.height = innerHeight + "px"
+        document.body.style.color = "white"
+        console.log("渲染WEB页元素" + (new Date() - bigBang) + 'ms')
+        let timer = new Date()
+        for (let i = 1; i <= 1e8; i++) {
+        }
+        console.log("cpu从1数到1亿：" + (new Date() - timer) + 'ms')
+      
+        let str = ''; let arrCET6 = [];
+        fetch('https://writernk.github.io/cet6.txt')
+            .then(res => res.text())
+            .then(txt => {
+                str = txt;
+                arrCET6 = str.split('\r\n');
+                let rand = Math.floor(arrCET6.length * Math.random());
+                let cetWord = arrCET6[rand];
+                let begin = cetWord.indexOf('\t');
+                let end = cetWord.lastIndexOf('\t');
+                let word = cetWord.slice(0, begin);
+                let pron = cetWord.slice(begin + 1, end)
+                let chin = cetWord.slice (end -1 );
+                select('#word').textContent = word;
+                select('#pron').textContent = pron;
+                select('#chin').textContent = chin; 
+               });
+        function select(str) {
+            let dom = document.querySelector(str);
+            return dom;
+        }
+    </script>
+</body>
+</html>
