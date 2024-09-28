@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script>
+        bigBang = new Date();
+    </script>
+    <meta charset="utf-8" />
+    <title>cet6</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            text-shadow: 2px 2px 2px grey;
+            border: 2px solid white;
+            box-sizing: border-box;
+        }
+
+        body{
+            font-size: calc(0.5em + 1.5vw);
+            height: 100vh;
+        }
+        header {
+            font-size:larger;
+            height: 25vh;
+            background-color: antiquewhite;
+        }
+
+        main {
+            height: 50vh;
+            background-color: aquamarine;
+        }
+
+        footer {
+            height: 10vh;
+            color: white;
+            background-color: grey;
+        }
+        p {
+            border: 1px solid white;
+        }
+        a {
+           
+            color: white;
+            border: none;
+        }
+        td1{
+            border: 3px solid red;
+            color : black;
+        }
+        nav {
+            height: 15vh;
+        }
+        button{
+             width:50% ;
+             height:50%;
+        }
+    </style>
+    <script>
+
+    </script>
+    <script>
+        console.log("加载CSS代码:"+(new Date() - bigBang) + 'ms')
+    </script>
+</head>
+<body>
+    <header>
+        9.28UI控制
+    </header>
+    <main>
+       <table style="width:100% ;height:100%">
+          <nav>
+            <button id="rand">随机单词</button>
+            <button id="load">加载单词</button>
+          </nav>
+            <tr><td1 id="loadtxt"></td1></tr>
+            <tr> <td id="word"></td><td id="pron"></td><td id="chin">&nbsp;</td></tr>
+        </table>
+    </main>
+    <footer>
+        <a href="https://www.jxstnu.edu.cn/">江西科技师范大学元宇宙产业学院</a> 计算机科学与技术二班<br>
+        黄可濠的UI控制 修改日期：2024.9.28
+    </footer>
+
+    <script>
+        document.body.style.height = innerHeight + "px"
+        document.body.style.color = "white"
+        console.log("渲染WEB页元素" + (new Date() - bigBang) + 'ms')
+        let timer = new Date()
+        for (let i = 1; i <= 1e8; i++) {
+        }
+        console.log("cpu从1数到1亿：" + (new Date() - timer) + 'ms')
+      
+        let str = ''; let arrCET6 = [];
+        fetch('https://writernk.github.io/cet6.txt')
+            .then(res => res.text())
+            .then(txt => {
+                str = txt;
+                arrCET6 = str.split('\r\n');
+                let rand = Math.floor(arrCET6.length * Math.random());
+                let cetWord = arrCET6[rand];
+                let begin = cetWord.indexOf('\t');
+                let end = cetWord.lastIndexOf('\t');
+                let word = cetWord.slice(0, begin);
+                let pron = cetWord.slice(begin + 1, end)
+                let chin = cetWord.slice (end -1 );
+                select('#word').textContent = word;
+                select('#pron').textContent = pron;
+                select('#chin').textContent = chin; 
+               });
+   </script>
+
+<script>
+    let UI = {} ;
+    UI.log = function(s){
+    select('footer').textContent = s ;
+    } ;
+    UI.txtlog=function(s){
+    select('td1').textContent = s ;
+    }
+    let Model = {} ;
+      Model.cet6String = '' ;
+      Model.CET6 = [] ;
+      Model.cetUrl = ['https://writernk.github.io/cet6-1.txt','https://writernk.github.io/cet6-2.txt','https://writernk.github.io/cet6-3.txt'];
+      for(let i=0; i<Model.cetUrl.length; i++){
+          fetch(Model.cetUrl[i])
+          .then(res => res.text())
+          .then(txt => {
+              Model.cet6String += txt ;
+              UI.txtlog('单词库：' + Model.cetUrl[i] + ' 加载成功!') ;  
+              utxt = Model.cet6String.split('\r\n');
+          });
+        }
+
+    select('button#load').onclick = function(){
+      Model.CET6 = Model.cet6String.split('\r\n') ;
+
+      if(Model.CET6.length < 5000){
+          UI.log("单词没有完全读入，Please wait!");
+      }else{
+        UI.log("加载了"+ Model.CET6.length + "单词")
+      }
+      
+    } ;
+    select('button#rand').onclick = function(){
+              
+      if(Model.CET6.length < 5000){
+          UI.log("请点“加载单词”按钮");
+      }else{
+        let rand = Math.floor(utxt.length * Math.random());
+                let cetWord = utxt[rand];
+                let begin = cetWord.indexOf('\t');
+                let end = cetWord.lastIndexOf('\t');
+                let word = cetWord.slice(0, begin);
+                let pron = cetWord.slice(begin + 1, end)
+                let chin = cetWord.slice (end -1 );
+                select('#word').textContent = word;
+                select('#pron').textContent = pron;
+                select('#chin').textContent = chin;
+      }
+      
+    } ;
+
+    function select(selector){
+        let dom = document.querySelector(selector) ;
+        return dom ;
+      }
+  </script>
+</body>
+</html>
