@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script>
+        bigBang = new Date();
+    </script>
+    <meta charset="utf-8" />
+    <title>cet6</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            text-shadow: 2px 2px 2px grey;
+            border: 2px solid white;
+            box-sizing: border-box;
+        }
+
+        body{
+            font-size: calc(0.5em + 1.5vw);
+            height: 100vh;
+        }
+        header {
+            font-size:larger;
+            height: 25vh;
+            background-color: antiquewhite;
+        }
+
+        main {
+            height: 50vh;
+            background-color: aquamarine;
+        }
+
+        footer {
+            height: 10vh;
+            color: white;
+            background-color: grey;
+        }
+        p {
+            border: 1px solid white;
+        }
+        a {
+           
+            color: white;
+            border: none;
+        }
+        nav {
+            height: 15vh;
+        }
+        button{
+             width:50% ;
+             height:50%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        10.11UI控制
+    </header>
+    <main>
+       <table style="width:100% ;height:100%">
+          <nav>
+            <button id="rand">随机单词</button>
+            <button id="firstWord">首个单词</button>
+            <button id="nextWord">下个单词</button>
+            <button id="lastWord">结尾单词</button>
+          </nav>
+           
+            <tr><td id="word"></td><td id="pron"></td><td id="chin">&nbsp;</td></tr>
+        </table>
+    </main>
+    <footer>
+         <tr><td1 id="loadtxt"></td1></tr>
+    </footer>
+<script>
+    let Model = {} ;
+    Model.CET6 = [] ;
+      Model.cetUrl = ['cet6.txt'];
+      for(let i=0; i<Model.cetUrl.length; i++){
+          fetch(Model.cetUrl[i])
+          .then(res => res.text())
+          .then(txt => {
+              Model.cet6String += txt ;
+              UI.txtlog('单词库：' + Model.cetUrl[i] + ' 加载成功!') ;  
+             let utxt = Model.cet6String.split('\n');
+             for(let i=0; i<utxt.length; i++){
+             let s = utxt[i] ;
+             let word = {} ;
+             let wordArr = s.split('\t') ;
+                 word.word = wordArr[0] ;
+                 word.pron = wordArr[1] ;
+                 word.chin = wordArr[2] ;
+             Model.CET6.push(word) ; 
+             }
+          });}
+      
+  let UI = {} ;
+    UI.log = function(s){
+    select('footer').textContent = s ;
+    } ;
+    UI.txtlog=function(s){
+    select('td1').textContent = s ;
+    };
+    UI.printWord = function(word){ 
+        select('#word').textContent = word.word ;
+        select('#pron').textContent = word.pron ;
+        select('#chin').textContent = word.chin ;
+     } ;
+     select('button#firstWord').onclick = function(){
+          let CET6 =  Model.CET6 ;
+          let word = CET6[0] ;
+          UI.printWord(word);
+          UI.log('你选中了第 1 个单词');
+       } ;
+    select('button#lastWord').onclick = function(){
+          let CET6 =  Model.CET6 ;
+          let word = CET6[CET6.length -1] ;
+          UI.printWord(word);
+          UI.log('你选中了最后一个单词');
+       } ;
+       select('button#rand').onclick = function(){
+          let CET6 =  Model.CET6 ;
+          let rand = Math.floor( Math.random() * CET6.length );
+          let word = CET6[rand] ;
+          UI.printWord(word);
+          UI.log('你随机选中了第 '+(rand+1)+' 个单词');
+       } ;
+       select('button#nextWord').onclick = function(){
+        var str1 = select('footer').textContent;
+        var num1 = str1.replace(/[^\d]/g, " ");
+        if(num1=='          ')
+       {
+        UI.log('已经到底啦,再次点击返回第一个');
+       }
+       else
+       {
+        num2=Number(num1)+1;
+        let CET6 =  Model.CET6 ;
+        let word = CET6[num2] ;
+        UI.printWord(word);
+        UI.log('你随机选中了第'+num2+'个单词');
+        }
+       };
+     function select(selector){
+        let dom = document.querySelector(selector) ;
+        return dom ;
+      }
+  </script>
+</body>
+</html>
