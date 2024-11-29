@@ -34,7 +34,7 @@
     main{
         margin-top: 1em;
         font-size: 1.6em;
-        height: 60% ;
+        height: 50% ;
         position: relative;
     }
     main p#en{
@@ -68,7 +68,8 @@
     }
     footer{
         height: 20% ;
-        font-size:1.2em;
+        font: size 1.2em;
+        
     }
     span#level{
         display: block;
